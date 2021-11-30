@@ -21,11 +21,9 @@ exports.getById = (req, res) => {
     const id = req.params.id;
 
     const product = products.find(product => product.id == id);
-    console.log(product)
 
     if (!product)
     {
-        console.log("no se encuentra el producto", id)
         res.status(404).send({message: "no se encuentra el producto"})
     }
 
