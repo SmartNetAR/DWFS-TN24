@@ -17,10 +17,29 @@ const productList = [
         price: 3000,
         image: 'https://cdn.tgdd.vn/Products/Images/42/114111/iphone-x-64gb-1-400x460.png'
     },
+    {
+        id: 4,
+        name: 'Samsung',
+        price: 10000,
+        image: 'https://cdn.tgdd.vn/Products/Images/42/114111/iphone-x-64gb-1-400x460.png'
+    },
+    {
+        id: 5,
+        name: 'Moto',
+        price: 1000,
+        image: 'https://cdn.tgdd.vn/Products/Images/42/114111/iphone-x-64gb-1-400x460.png'
+    },
 ]
 
 
 app.get('/products', (req, res) => {
+
+    if (req.query.brand)
+    {
+        const result = productList.filter(product => product.name.toLowerCase() === req.query.brand.toLowerCase());
+        return res.send(result);
+    }
+
     res.send(productList);
 });
 
