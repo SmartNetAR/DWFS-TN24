@@ -1,7 +1,37 @@
 const express = require('express');
+var morgan = require('morgan');
+
 const app = express();
 
 app.use(express.json());
+
+const logMiddleware = (req, res, next) => {
+    console.table([
+        {
+            path: req.method,
+            url: req.url
+        }
+    ]);
+    next();
+}
+
+app.use(morgan('dev'));
+
+app.use(logMiddleware);
+
+
+const autenticar = (req, res, next) =>
+{
+    const password = "secret";
+    if (password === "secret")
+    {
+        next();
+    }
+    else
+    {
+        res.status(401).json({"message": "Tu password es incorrecto"})
+    }
+} 
 
 
 const productList = [
@@ -32,8 +62,9 @@ const productList = [
 ]
 
 
-app.get('/products', (req, res) => {
+app.get('/products', [autenticar], (req, res) => {
 
+    console.log("ruta products")
     if (req.query.brand)
     {
         const result = productList.filter(product => product.name.toLowerCase() === req.query.brand.toLowerCase());
@@ -58,7 +89,18 @@ app.get('/products/:id', (req, res) => {
     }
 });
 
-app.delete('/products/:id', (req, res) => {
+
+app.delete('client/:clientId/products/:id([0-9]{6})', (req, res) => {
+    const paramId = parseInt( req.params.id, 10 );
+    const productIndex = productList.findIndex( productElement => productElement.id === paramId );
+
+    productList.splice(productIndex, 1);
+
+    res.json({msg: `${productIndex} deleted`});
+
+});
+
+app.delete('client/:clientId/products/phones', (req, res) => {
     const paramId = parseInt( req.params.id, 10 );
     const productIndex = productList.findIndex( productElement => productElement.id === paramId );
 
