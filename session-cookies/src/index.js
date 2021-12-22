@@ -1,8 +1,10 @@
 const express = require('express');
 const session = require('express-session');
 const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
 
 const authRoutes = require('./auth/routes');
+const userRoutes = require('./user/routes');
 
 const app = express();
 
@@ -17,6 +19,7 @@ app.use(session({
     }
 }));
 
+app.use(cookieParser())
 
 app.get('/', (req, res) => {
     const body = `
@@ -28,7 +31,8 @@ app.get('/', (req, res) => {
     res.send(body);
 })
 
-app.use('/auth', authRoutes)
+app.use('/auth', authRoutes);
+app.use('/users', userRoutes);
 
 app.listen(3000, () => {
     console.log('Server running on port 3000');
