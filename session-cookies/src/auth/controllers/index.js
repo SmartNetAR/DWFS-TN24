@@ -1,13 +1,12 @@
+const authRepository = require("../repository");
 
 const authController = {};
 
 authController.login = (req, res) => {
-    const user = {
-        id: 1,
-        name: 'John Doe',
-        email: 'john@doe.com'
-    };
-    if (true)
+
+    const user = authRepository.findByEmail("john@doe.com");
+
+    if (user)
     {
         req.session.user = user;
         res.send('Bienvenido');
