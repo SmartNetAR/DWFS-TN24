@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "db:model": "sequelize-cli model:generate",
+    "db:migrate": "sequelize-cli db:migrate"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.4.1"
+  },
+  "dependencies": {
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.13.0"
+  }
+}
