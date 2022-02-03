@@ -1,4 +1,5 @@
 const express = require("express");
+const citiesController = require("./citiesController");
 
 const app = express();
 
@@ -33,6 +34,8 @@ router.patch("/products/:id", (req, res) => {
 
 router.delete("/products/:id", (req, res) => {
 });
+
+router.get("/cities", citiesController.list);
 
 app.use("/api", router);
 
