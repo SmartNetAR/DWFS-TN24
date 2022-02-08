@@ -1,7 +1,9 @@
 const express = require("express");
 const citiesController = require("./citiesController");
+const cors = require('cors')
 
 const app = express();
+app.use(cors());
 
 const router = express.Router();
 
